@@ -60,7 +60,6 @@ func (q *query) GetResult(db *sql.DB) (interface{}, error) {
 	ptr := reflect.New(q.builder.t)
 	entity := ptr.Elem()
 	fieldInfo, queryStr := prepareSelect(entity, q.builder)
-
 	stmt, err := db.Prepare(queryStr)
 	if err != nil {
 		return nil, err
@@ -180,6 +179,16 @@ func (q *query) GetSQL() string {
 
 func finishSQL(builder *builder, queryStr, table string) string {
 	var from string
+	switch builder.statement {
+	case "select", "count":
+		if builder.from != "" {
+			from = builder.from
+		} else {
+			from = table
+		}
+		queryStr += " FROM " + from
+	}
+
 	setWhere := false
 	if builder.where != "" {
 		setWhere = true
@@ -250,16 +259,6 @@ func finishSQL(builder *builder, queryStr, table string) string {
 
 	if builder.offset > 0 {
 		queryStr += " OFFSET " + strconv.FormatInt(builder.offset, 10)
-	}
-
-	switch builder.statement {
-	case "select", "count":
-		if builder.from != "" {
-			from = builder.from
-		} else {
-			from = table
-		}
-		queryStr += " FROM " + from
 	}
 
 	return queryStr
@@ -363,14 +362,13 @@ func save(q *query, db *sql.DB) (interface{}, error) {
 
 	for i := 0; i < slice.Len(); i++ {
 		var fieldInfo []interface{}
-		s := slice.Index(i).Elem()
-		isNew := s.Field(i).Int() == int64(0)
-
+		s := slice.Index(i)
+		for j := 1; j < s.NumField(); j++ {
+			fieldInfo = append(fieldInfo, s.Field(j).Interface())
+		}
+		isNew := s.Field(0).Int() == int64(0)
 		if !isNew {
 			fieldInfo = append(fieldInfo, s.Field(0).Interface())
-		}
-		for i := 1; i < s.NumField(); i++ {
-			fieldInfo = append(fieldInfo, s.Field(i).Addr().Interface())
 		}
 
 		if isNew {

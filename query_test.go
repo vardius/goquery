@@ -32,7 +32,7 @@ func ExampleParseQuery() {
 		GetSQL()
 
 	fmt.Println(sql)
-	// Output: SELECT id, email WHERE id = ? AND col2 = ? OR col3 = ? ORDER BY id DESC GROUP BY id, email HAVING COUNT(col1) > ? AND COUNT(col2) > ? OR COUNT(col3) > ? LIMIT 10 OFFSET 5 FROM users
+	// Output: SELECT id, email FROM users WHERE id = ? AND col2 = ? OR col3 = ? ORDER BY id DESC GROUP BY id, email HAVING COUNT(col1) > ? AND COUNT(col2) > ? OR COUNT(col3) > ? LIMIT 10 OFFSET 5
 }
 
 func ExampleParseEmptySelect() {
@@ -110,7 +110,7 @@ func ExampleParseOrder() {
 		GetSQL()
 
 	fmt.Println(sql)
-	// Output: SELECT id ORDER BY id DESC FROM users
+	// Output: SELECT id FROM users ORDER BY id DESC
 }
 
 func ExampleParseAddOrder() {
@@ -130,7 +130,7 @@ func ExampleParseAddOrder() {
 		GetSQL()
 
 	fmt.Println(sql)
-	// Output: SELECT id ORDER BY email ASC FROM users
+	// Output: SELECT id FROM users ORDER BY email ASC
 }
 
 func ExampleParseDistinct() {
