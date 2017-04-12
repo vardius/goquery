@@ -1,6 +1,6 @@
 Vardius - goquery
 ================
-[![Build Status](https://travis-ci.org/Vardius/goquery.svg?branch=master)](https://travis-ci.org/Vardius/goquery) [![](https://godoc.org/github.com/vardius/goquery?status.svg)](http://godoc.org/github.com/vardius/goquery) [![Coverage Status](https://coveralls.io/repos/github/Vardius/goquery/badge.svg?branch=master)](https://coveralls.io/github/Vardius/goquery?branch=master)
+[![Build Status](https://travis-ci.org/vardius/goquery.svg?branch=master)](https://travis-ci.org/Vardius/goquery) [![](https://godoc.org/github.com/vardius/goquery?status.svg)](http://godoc.org/github.com/vardius/goquery) [![Coverage Status](https://coveralls.io/repos/github/Vardius/goquery/badge.svg?branch=master)](https://coveralls.io/github/vardius/goquery?branch=master)
 
 GO Query Builder
 
